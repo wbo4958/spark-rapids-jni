@@ -41,5 +41,9 @@ public class CudaIPC {
   }
 
   private static native byte[] getCudaIpcMemHandleBytes(long devPtr);
+  
+  public static native void cudaDeviceSynchronize();
+
+  public static native void checkGpuMemory(long ptr, int count);
 
 }

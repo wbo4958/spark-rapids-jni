@@ -35,4 +35,34 @@ JNIEXPORT jbyteArray JNICALL Java_com_nvidia_spark_rapids_jni_CudaIPC_getCudaIpc
   return jout;
 }
 
+/*
+ * Class:     com_nvidia_spark_rapids_jni_CudaIPC
+ * Method:    cudaDeviceSynchronize
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_com_nvidia_spark_rapids_jni_CudaIPC_cudaDeviceSynchronize
+(JNIEnv *jenv, jclass jclz)
+{
+  CUDF_CUDA_TRY(cudaDeviceSynchronize());
+}
+
+/*
+ * Class:     com_nvidia_spark_rapids_jni_CudaIPC
+ * Method:    checkGpuMemory
+ * Signature: (JI)V
+ */
+JNIEXPORT void JNICALL Java_com_nvidia_spark_rapids_jni_CudaIPC_checkGpuMemory
+(JNIEnv *jenv, jclass jclz, jlong j_ptr, jint jcount)
+{
+  int *ptr = reinterpret_cast<int *>(j_ptr);
+  std::vector<int> v(jcount);
+  CUDF_CUDA_TRY(cudaMemcpy(v.data(), ptr, jcount * sizeof(int), cudaMemcpyDeviceToHost));
+  std::cout << "Checking GPU memory: ptr: " << j_ptr << " { ";
+  for (int i = 0; i < jcount; i++) {
+    std::cout << v[i] << " ";
+  }
+  std::cout << "}" << std::endl;
+}
+
+
 } // extern "C"
