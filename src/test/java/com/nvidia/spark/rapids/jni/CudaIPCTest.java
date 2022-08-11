@@ -85,7 +85,7 @@ public class CudaIPCTest {
     ContiguousTable split[] = table.contiguousSplit();
     byte[] bytes = CudaIPC.getCudaIpcMemHandle(split[0].getBuffer().getAddress());
     ByteBuffer metaBuffer = split[0].getMetadataDirectBuffer().order(ByteOrder.nativeOrder());
-    PackedColumns x = PackedColumns.parseSerializedColumns(metaBuffer);
+//    PackedColumns x = PackedColumns.parseSerializedColumns(metaBuffer);
 
 //    writeToFile(total, "/tmp/cuda.ipc");
 
@@ -144,8 +144,8 @@ public class CudaIPCTest {
 //    cv = table.getColumn(0);
     cv = xx[0];
     DeviceMemoryBufferView dmb = (DeviceMemoryBufferView) cv.getDeviceBufferFor(BufferType.DATA);
-    int offset = dmb.getOffset();
-    System.out.println("offset " + offset);
+//    int offset = dmb.getOffset();
+//    System.out.println("offset " + offset);
 
 //    cv = ColumnVector.fromInts(11, 32, 3, 4, 5, 6, 9, 10, 20, 38);
     long ptr = cv.getDeviceBufferFor(BufferType.DATA).getAddress();
